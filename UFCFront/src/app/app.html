@@ -1,0 +1,21 @@
+<div class="layout-container">
+
+  <header class="header">
+    <div class="logo">🥊 UFC STATISTICS CENTER</div>
+    <nav class="navbar">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+      <a routerLink="/peleadores" routerLinkActive="active">Peleadores</a>
+      <a routerLink="/eventos" routerLinkActive="active">Eventos</a>
+      <a routerLink="/rankings" routerLinkActive="active">Rankings</a>
+
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <p>Universidad El Bosque - Proyecto Bases de Datos I - 2025</p>
+  </footer>
+</div>
