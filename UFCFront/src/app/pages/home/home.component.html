@@ -1,1 +1,66 @@
-<p>home works!</p>
+<div class="home-container">
+
+  <!-- Banner -->
+  <section class="banner">
+    <h1>🥊 UFC STATISTICS CENTER</h1>
+    <p>Consulta estadísticas de peleadores, eventos y rankings de la UFC en un solo lugar.</p>
+  </section>
+
+  <!-- Estadísticas rápidas -->
+  <section class="estadisticas">
+    <div class="stat-card">👤 <strong>{{ estadisticas.peleadores }}</strong> Peleadores</div>
+    <div class="stat-card">📅 <strong>{{ estadisticas.eventos }}</strong> Eventos</div>
+    <div class="stat-card">⚖️ <strong>{{ estadisticas.divisiones }}</strong> Divisiones</div>
+  </section>
+
+  <!-- Peleadores destacados -->
+  <section class="peleadores">
+    <h2>🥊 Peleadores Destacados</h2>
+
+    <!-- Si el array no tiene elementos mostramos mensaje -->
+    <div *ngIf="peleadoresDestacados?.length === 0" class="empty-msg">
+      No hay peleadores destacados disponibles.
+    </div>
+
+    <!-- Lista de cards -->
+    <div class="cards" *ngIf="peleadoresDestacados?.length > 0">
+      <div class="card" *ngFor="let p of peleadoresDestacados; trackBy: trackByNombre">
+        <h3>{{ p.nombre }}</h3>
+        <p>División: {{ p.division }}</p>
+        <p>Victorias: {{ p.victorias }} | Derrotas: {{ p.derrotas }}</p>
+        <button (click)="verPeleador(p)">Ver perfil</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Próximo evento -->
+  <section class="evento">
+    <h2>🔥 Próximo Evento</h2>
+    <p><strong>{{ proximoEvento.nombre }}:</strong> {{ proximoEvento.pelea }}</p>
+    <p>📍 {{ proximoEvento.lugar }} - {{ proximoEvento.fecha }}</p>
+  </section>
+
+  <!-- Ranking reducido -->
+  <section class="ranking">
+    <h2>🏆 Top 3 Ranking Peso Ligero</h2>
+
+    <div *ngIf="rankingLigero?.length === 0" class="empty-msg">
+      No hay ranking disponible.
+    </div>
+
+    <table *ngIf="rankingLigero?.length > 0">
+      <tr *ngFor="let r of rankingLigero; trackBy: trackByPuesto">
+        <td class="puesto">#{{ r.puesto }}</td>
+        <td class="nombre">{{ r.nombre }}</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Depuración - quitar luego -->
+  <section class="debug" style="display:none;">
+    <h3>DEBUG (quitar luego)</h3>
+    <pre>{{ peleadoresDestacados | json }}</pre>
+    <pre>{{ rankingLigero | json }}</pre>
+  </section>
+
+</div>
