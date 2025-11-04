@@ -1,66 +1,72 @@
-<P>Panel de Estadísticas</P>
-<div class="estadisticas-root" style="padding:1.25rem; color: white; max-width:1200px; margin:0 auto;">
-  <h2 style="color:#ff2b2b; margin-bottom:0.5rem;">📊 Estadísticas — Panel</h2>
+<div class="estadisticas-root">
+  <div class="estadisticas-container">
+    <h2>📊 Estadísticas del Sistema</h2>
 
-  <!-- controles -->
-  <div style="display:flex; gap:0.6rem; align-items:center; margin-bottom:0.8rem;">
-    <label>
-      Dataset:
-      <select [(ngModel)]="resultado" (change)="onDatasetChange()" style="margin-left:0.4rem;">
-        <option *ngFor="let d of resultados" [value]="d.key">{{ d.label }}</option>
-      </select>
-    </label>
+    <!-- SECCIÓN DE CONTROLES -->
+    <div class="controles">
+      <div class="control-grupo">
+        <label>Tabla:</label>
+        <select [(ngModel)]="selectedDataset" (change)="onDatasetChange()">
+          <option *ngFor="let d of resultados" [value]="d.key">{{ d.label }}</option>
+        </select>
+      </div>
 
-    <label>
-      Búsqueda global:
-      <input type="text" [(ngModel)]="searchTerm" (input)="aplicarFiltros()" placeholder="texto libre..."
-        style="margin-left:0.4rem;" />
-    </label>
+      <div class="control-grupo">
+        <label>Buscar:</label>
+        <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="aplicarFiltros()" placeholder="texto libre..." />
+      </div>
 
-    <label>
-      Filtrar por campo:
-      <select [(ngModel)]="campoFiltro" (change)="aplicarFiltros()" style="margin-left:0.4rem;">
-        <option value="">(ninguno)</option>
-        <option *ngFor="let c of columnas" [value]="c">{{ c }}</option>
-      </select>
-    </label>
+      <div class="control-grupo">
+        <label>Campo:</label>
+        <select [(ngModel)]="campoFiltro">
+          <option value="">(ninguno)</option>
+          <option *ngFor="let c of columnas" [value]="c">{{ c }}</option>
+        </select>
+      </div>
 
-    <label *ngIf="campoFiltro">
-      Valor:
-      <input type="text" [(ngModel)]="valorFiltro" (input)="aplicarFiltros()" style="margin-left:0.4rem;" />
-    </label>
+      <div class="control-grupo">
+        <label>Valor:</label>
+        <input type="text" [(ngModel)]="valorFiltro" (keyup.enter)="aplicarFiltros()" placeholder="valor..." />
+      </div>
 
-    <button (click)="exportarExcel()"
-      style="margin-left:auto; background:#22c55e; color:#000; padding:0.4rem 0.8rem; border-radius:6px;">Exportar
-      Excel</button>
-  </div>
+      <button (click)="exportarExcel()" class="btn-accent">📤 Exportar Excel</button>
+    </div>
 
-  <div *ngIf="cargando" style="padding:1rem; background:#111; border-radius:8px;">Cargando datos...</div>
-  <div *ngIf="errorMsg" style="padding:1rem; background:#441111; border-radius:8px;">{{ errorMsg }}</div>
+    <!-- CONSULTA SQL PERSONALIZADA -->
+    <div class="sql-container">
+      <h3>🧠 Consulta SQL personalizada</h3>
+      <textarea [(ngModel)]="customSQL" rows="4" cols="80"
+        placeholder="Escribe aquí tu sentencia SQL completa..."></textarea>
+      <div class="sql-buttons">
+        <button (click)="ejecutarCustomSQL()" class="btn-primary">Ejecutar SQL</button>
+        <button (click)="customSQL=''" class="btn-secondary">Limpiar</button>
+      </div>
+    </div>
 
-  <div style="margin-top:1rem;">
-    <small>Columnas detectadas: <strong>{{ columnas.length }}</strong></small>
-  </div>
+    <!-- MENSAJE DE ESTADO -->
+    <div *ngIf="loading" class="loading">⏳ Cargando datos...</div>
+    <div *ngIf="error" class="error">⚠️ {{ error }}</div>
 
-  <div style="margin-top:0.6rem; overflow:auto; background:#141414; border-radius:8px; padding:0.6rem;">
-    <table style="width:100%; border-collapse:collapse; color:#eee;">
-      <thead>
-        <tr style="text-align:left; border-bottom:1px solid #333;">
-          <th *ngFor="let c of columnas" style="padding:0.5rem 0.6rem; min-width:120px;">{{ c }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of previewRows(200)" style="border-bottom:1px solid rgba(255,255,255,0.03);">
-          <td *ngFor="let c of columnas" style="padding:0.4rem 0.6rem; vertical-align:top;">
-            <span>{{ row[c] !== undefined && row[c] !== null ? row[c] : '-' }}</span>
-          </td>
-        </tr>
-        <tr *ngIf="datosFiltrados.length === 0">
-          <td [attr.colspan]="columnas.length" style="padding:0.6rem; text-align:center; color:#999;">
-            No hay filas que coincidan con el filtro.
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- TABLA DE RESULTADOS -->
+    <div class="tabla-wrapper" *ngIf="!loading && rawData && rawData.length > 0">
+      <table class="tabla-resultados">
+        <thead>
+          <tr>
+            <th *ngFor="let col of columnas">{{ col }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fila of rawData | slice:0:50">
+            <td *ngFor="let col of columnas">
+              {{ fila[col] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="!loading && rawData.length === 0" class="sin-datos">
+      No hay resultados para mostrar.
+    </div>
   </div>
 </div>

@@ -1,7 +1,12 @@
 <div class="layout-container">
 
   <header class="header">
-    <div class="logo">🥊 UFC STATISTICS CENTER</div>
+    <div class="logo">
+      <a routerLink="/" class="logo-link">
+        <img src="../assets/imgs/logoo.png" alt="UFC Logo" class="logo-img" />
+        <span class="logo-text">UFC STATISTICS CENTER</span>
+      </a>
+    </div>
     <nav class="navbar">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
       <a routerLink="/peleadores" routerLinkActive="active">Peleadores</a>

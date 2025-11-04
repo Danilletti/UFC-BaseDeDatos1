@@ -1,118 +1,147 @@
+/* === CONTENEDOR PRINCIPAL === */
 .home-container {
-  padding: 2rem;
-  color: #fff;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Banner */
-.banner {
+  background: radial-gradient(circle at top, #111 0%, #000 80%);
+  padding: 60px 20px;
   text-align: center;
-  padding: 2.5rem;
-  background: linear-gradient(180deg, #111, #232323);
-  border-radius: 12px;
-  margin-bottom: 1.8rem;
+  color: #ddd;
+  animation: fadeIn 1s ease-in;
 }
 
-.banner h1 {
-  color: #ff2b2b;
-  margin: 0 0 0.6rem 0;
+.hero {
+  margin-bottom: 50px;
 }
 
-/* Estadísticas */
-.estadisticas {
+.hero h2 {
+  color: #ff3c3c;
+  font-size: 2.2em;
+  letter-spacing: 1px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.hero p {
+  color: #bbb;
+  margin-top: 10px;
+  font-size: 2em;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.stats {
   display: flex;
-  gap: 1rem;
   justify-content: center;
-  margin-bottom: 1.6rem;
-}
-
-.stat-card {
-  background: #1b1b1b;
-  padding: 0.9rem 1.2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-/* Peleadores */
-.peleadores h2 {
-  margin-top: 0;
-}
-
-.cards {
-  display: flex;
-  gap: 1rem;
+  gap: 30px;
+  margin: 40px auto;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-top: 0.8rem;
+}
+
+.stats div {
+  background: rgba(20, 20, 20, 0.9);
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.stats div:hover {
+  transform: scale(1.1);
+  background: #ff3c3c;
+}
+
+/* === SECCIONES === */
+section {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 25px;
+  background: rgba(20, 20, 20, 0.85);
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+  text-align: left;
+  animation: fadeUp 0.8s ease;
+}
+
+section h3 {
+  color: #ff3c3c;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fighters {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card {
-  background: #1e1e1e;
+  background: #111;
+  padding: 15px;
+  border-radius: 12px;
+  width: 250px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 15px rgba(255, 60, 60, 0.4);
+}
+
+.card h4 {
   color: #fff;
-  padding: 1rem;
-  border-radius: 10px;
-  width: 220px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+  margin-bottom: 8px;
 }
 
-.card h3 {
-  margin: 0 0 0.4rem 0;
-  font-size: 1.05rem;
-}
-
-.card button {
-  margin-top: 0.6rem;
-  background: #ff2b2b;
+.btn {
+  display: inline-block;
+  background: #ff3c3c;
+  color: #fff;
+  padding: 6px 12px;
   border: none;
-  color: white;
-  padding: 0.4rem 0.7rem;
-  border-radius: 6px;
+  border-radius: 5px;
+  margin-top: 8px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-/* Evento y ranking */
-.evento,
-.ranking {
-  margin-top: 1.4rem;
-  background: #292929;
-  padding: 1rem;
-  border-radius: 10px;
+.btn:hover {
+  background: #e31e1e;
 }
 
-.ranking table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0.6rem;
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #ff3c3c;
+  }
+
+  to {
+    text-shadow: 0 0 20px #ff3c3c;
+  }
 }
 
-.ranking td {
-  padding: 0.6rem 0.8rem;
-  border-bottom: 1px solid #333;
-  color: #fff;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-.puesto {
-  width: 60px;
-  font-weight: 700;
-  color: #ffd700;
-}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-.nombre {
-  font-weight: 600;
-}
-
-/* Mensaje vacío */
-.empty-msg {
-  color: #ddd;
-  padding: 0.6rem;
-}
-
-/* Debug (oculto por defecto) */
-.debug {
-  margin-top: 1rem;
-  background: #0f0f0f;
-  padding: 1rem;
-  border-radius: 6px;
-  color: #fff;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

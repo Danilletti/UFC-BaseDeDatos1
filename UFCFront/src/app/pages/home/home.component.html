@@ -1,66 +1,45 @@
 <div class="home-container">
-
-  <!-- Banner -->
-  <section class="banner">
-    <h1>🥊 UFC STATISTICS CENTER</h1>
+  <!-- Sección Hero -->
+  <div class="hero">
     <p>Consulta estadísticas de peleadores, eventos y rankings de la UFC en un solo lugar.</p>
-  </section>
+  </div>
 
-  <!-- Estadísticas rápidas -->
-  <section class="estadisticas">
-    <div class="stat-card">👤 <strong>{{ estadisticas.peleadores }}</strong> Peleadores</div>
-    <div class="stat-card">📅 <strong>{{ estadisticas.eventos }}</strong> Eventos</div>
-    <div class="stat-card">⚖️ <strong>{{ estadisticas.divisiones }}</strong> Divisiones</div>
-  </section>
+  <!-- Contadores -->
+  <div class="stats">
+    <div>650 Peleadores</div>
+    <div>310 Eventos</div>
+    <div>12 Divisiones</div>
+  </div>
 
-  <!-- Peleadores destacados -->
-  <section class="peleadores">
-    <h2>🥊 Peleadores Destacados</h2>
-
-    <!-- Si el array no tiene elementos mostramos mensaje -->
-    <div *ngIf="peleadoresDestacados?.length === 0" class="empty-msg">
-      No hay peleadores destacados disponibles.
-    </div>
-
-    <!-- Lista de cards -->
-    <div class="cards" *ngIf="(peleadoresDestacados?.length ?? 0) > 0">
-      <div class="card" *ngFor="let p of peleadoresDestacados; trackBy: trackByNombre">
-        <h3>{{ p.nombre }}</h3>
-        <p>División: {{ p.division }}</p>
-        <p>Victorias: {{ p.victorias }} | Derrotas: {{ p.derrotas }}</p>
-        <button (click)="verPeleador(p)">Ver perfil</button>
+  <!-- Peleadores Destacados -->
+  <section class="featured">
+    <h3>👊 Peleadores Destacados</h3>
+    <div class="fighters">
+      <div class="card">
+        <h4>Conor McGregor</h4>
+        <p><b>División:</b> Ligero</p>
+        <p><b>Victorias:</b> 22 | <b>Derrotas:</b> 6</p>
+        <button class="btn">Ver perfil</button>
+      </div>
+      <div class="card">
+        <h4>Jon Jones</h4>
+        <p><b>División:</b> Semipesado</p>
+        <p><b>Victorias:</b> 27 | <b>Derrotas:</b> 1</p>
+        <button class="btn">Ver perfil</button>
       </div>
     </div>
   </section>
 
-  <!-- Próximo evento -->
-  <section class="evento">
-    <h2>🔥 Próximo Evento</h2>
-    <p><strong>{{ proximoEvento.nombre }}:</strong> {{ proximoEvento.pelea }}</p>
-    <p>📍 {{ proximoEvento.lugar }} - {{ proximoEvento.fecha }}</p>
+  <!-- Próximo Evento -->
+  <section class="next-event">
+    <h3>🔥 Próximo Evento</h3>
+    <p><b>UFC 310:</b> McGregor vs Jon Jones</p>
+    <p>📍 Las Vegas - 15 Nov 2025</p>
   </section>
 
-  <!-- Ranking reducido -->
+  <!-- Ranking -->
   <section class="ranking">
-    <h2>🏆 Top 3 Ranking Peso Ligero</h2>
-
-    <div *ngIf="rankingLigero?.length === 0" class="empty-msg">
-      No hay ranking disponible.
-    </div>
-
-    <table *ngIf="(rankingLigero?.length ?? 0) > 0">
-      <tr *ngFor="let r of rankingLigero; trackBy: trackByPuesto">
-        <td class="puesto">#{{ r.puesto }}</td>
-        <td class="nombre">{{ r.nombre }}</td>
-      </tr>
-    </table>
+    <h3>🏆 Top 3 Ranking Peso Ligero</h3>
+    <p><i>No hay ranking disponible.</i></p>
   </section>
-
-  <!-- Depuración - quitar luego -->
-  <section class="debug" style="display:none;">
-    <h3>DEBUG (quitar luego)</h3>
-    <pre>{{ peleadoresDestacados | json }}</pre>
-    <pre>{{ rankingLigero | json }}</pre>
-  </section>
-
 </div>
