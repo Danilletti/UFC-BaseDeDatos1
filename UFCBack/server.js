@@ -11,11 +11,11 @@ app.use(express.json());
 
 // ⚙️ CONFIGURACIÓN DE MYSQL - Cambiar con tus datos
 const dbConfig = {
-  host: '192.168.74.128',
+  host: 'localhost',
   port: 3306,
   user: 'root',
-  password: '#Sant0Jau2',
-  database: 'ufcdatabase', 
+  password: 'Buhodermia69%',
+  database: 'ufcdatabase',
   multipleStatements: true
 };
 
@@ -63,7 +63,7 @@ app.post('/api/execute', (req, res) => {
 
     // Determinar el tipo de operación
     const operation = sql.trim().split(' ')[0].toUpperCase();
-    
+
     res.json({
       success: true,
       operation: operation,

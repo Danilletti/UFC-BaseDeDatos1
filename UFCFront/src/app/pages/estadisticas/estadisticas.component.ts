@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import { RouterModule } from '@angular/router';
+import { MysqlService } from '../../services/pool.service';
 
 @Component({
   selector: 'app-estadisticas',
@@ -14,19 +15,59 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./estadisticas.component.css']
 })
 export class EstadisticasComponent implements OnInit {
-  // Configura aquí la URL base de la base de datos
-  API_BASE = 'http://localhost:3000';
+  constructor(private pool: MysqlService) { }
+  sqlQuery: string = 'SELECT * FROM PELEADOR;';
+  resultado: any = null;
+  loading: boolean = false;
+  error: string = '';
 
-  // datasets disponibles (se usarán como endpoints: /api/peleadores, /api/eventos, ...)
-  datasets = [
+  resultados = [
     { key: 'peleadores', label: 'Peleadores' },
-    { key: 'eventos', label: 'Eventos' },
-    { key: 'rankings', label: 'Rankings' },
-    { key: 'divisiones', label: 'Divisiones' },
+    { key: 'combates', label: 'Combates' },
+    { key: 'sedes', label: 'Sedes' }
   ];
 
+  ejecutarQuery() {
+    this.loading = true;
+    this.error = '';
+    this.resultado = null;
+
+    let query = '';
+    switch (this.resultado) {
+      case 'peleadores':
+        query = 'SELECT * FROM PELEADOR;';
+        break;
+      case 'combates':
+        query = 'SELECT * FROM COMBATE;';
+        break;
+      case 'sedes':
+        query = 'SELECT * FROM SEDE;';
+        break;
+      default:
+        query = 'SELECT * FROM SEDE;';
+    }
+
+    this.pool.executeQuery(query).subscribe({
+      next: (response) => {
+        this.loading = false;
+        if (response.success) {
+          this.resultado = response.data; // 👈 importante: guarda los datos, no todo el objeto
+          this.rawData = response.data || [];
+          this.postProcessData();
+        } else {
+          this.error = response.error || 'Error desconocido';
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        this.error = `Error de conexión: ${err.message}`;
+      }
+    });
+  }
+
+
   // estado
-  selectedDataset = 'peleadores';
+  selectedDataset = 'peleador';
   rawData: any[] = [];         // datos sin filtrar
   datosFiltrados: any[] = [];  // datos mostrados en la tabla
   columnas: string[] = [];     // cabeceras (keys calculadas)
@@ -37,33 +78,12 @@ export class EstadisticasComponent implements OnInit {
   cargando = false;
   errorMsg = '';
 
-  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.cargarDataset(this.selectedDataset);
+    this.ejecutarQuery();
   }
 
-  // cargar desde API (o fallback a arreglo vacío)
-  cargarDataset(datasetKey: string) {
-    this.cargando = true;
-    this.errorMsg = '';
-    const url = `${this.API_BASE}/${datasetKey}`;
-    this.http.get<any[]>(url).subscribe({
-      next: (res) => {
-        this.rawData = Array.isArray(res) ? res : [];
-        this.postProcessData();
-        this.cargando = false;
-      },
-      error: (err) => {
-        console.error('Error al cargar dataset', url, err);
-        this.errorMsg = `No se pudo cargar ${datasetKey} (revisa backend / CORS).`;
-        // mantener rawData vacío y limpiar vista
-        this.rawData = [];
-        this.postProcessData();
-        this.cargando = false;
-      }
-    });
-  }
+
 
   // después de cargar: sacar columnas y aplicar filtros
   postProcessData() {
@@ -107,24 +127,24 @@ export class EstadisticasComponent implements OnInit {
 
   // cambiar dataset (select)
   onDatasetChange() {
-    this.cargarDataset(this.selectedDataset);
+    this.ejecutarQuery();
   }
 
-  // exportar lo filtrado a Excel
   exportarExcel() {
-    if (!this.datosFiltrados || this.datosFiltrados.length === 0) {
+    if (!this.resultado || this.resultado.length === 0) {
       alert('No hay datos para exportar con el filtro actual.');
       return;
     }
-    const hoja = XLSX.utils.json_to_sheet(this.datosFiltrados);
+    const hoja = XLSX.utils.json_to_sheet(this.resultado);
     const libro = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(libro, hoja, 'Datos');
-    const filename = `estadisticas_${this.selectedDataset}_${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.xlsx`;
+    const filename = `estadisticas.xlsx`;
     XLSX.writeFile(libro, filename);
   }
 
+
   // util: devolver primeras N filas para vista previa (opcional)
   previewRows(n = 50) {
-    return this.datosFiltrados.slice(0, n);
+    return this.resultado.slice(0, n);
   }
 }

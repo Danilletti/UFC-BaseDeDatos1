@@ -6,8 +6,8 @@
   <div style="display:flex; gap:0.6rem; align-items:center; margin-bottom:0.8rem;">
     <label>
       Dataset:
-      <select [(ngModel)]="selectedDataset" (change)="onDatasetChange()" style="margin-left:0.4rem;">
-        <option *ngFor="let d of datasets" [value]="d.key">{{ d.label }}</option>
+      <select [(ngModel)]="resultado" (change)="onDatasetChange()" style="margin-left:0.4rem;">
+        <option *ngFor="let d of resultados" [value]="d.key">{{ d.label }}</option>
       </select>
     </label>
 
