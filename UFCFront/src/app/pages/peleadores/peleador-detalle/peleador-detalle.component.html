@@ -1,0 +1,21 @@
+<div class="detalle-page" *ngIf="peleador">
+  <button class="back" routerLink="/peleadores">« Volver</button>
+
+  <div class="detalle-card">
+    <img [src]="peleador.imagen" alt="{{ peleador.nombre }}" />
+    <div class="info">
+      <h2>{{ peleador.nombre }} {{ peleador.apellido }} <span *ngIf="peleador.apodo">"{{ peleador.apodo }}"</span></h2>
+      <p><strong>Nacionalidad:</strong> {{ peleador.nacionalidad }}</p>
+      <p><strong>División ID:</strong> {{ peleador.id_division }}</p>
+      <p><strong>Estatura:</strong> {{ peleador.estatura_cm }} cm</p>
+      <p><strong>Peso:</strong> {{ peleador.peso_kg }} kg</p>
+      <p><strong>Alcance:</strong> {{ peleador.alcance_cm }} cm</p>
+      <p><strong>Estilo:</strong> {{ peleador.estilo_principal }}</p>
+      <p><strong>Mano:</strong> {{ peleador.mano_predominante }}</p>
+      <p><strong>Debut:</strong> {{ peleador.debut_profesional }}</p>
+      <p><strong>Récord:</strong> {{ peleador.record_victorias }}-{{ peleador.record_derrotas }}-{{
+        peleador.record_empates }}</p>
+      <p><strong>Estado:</strong> {{ peleador.estado }}</p>
+    </div>
+  </div>
+</div>

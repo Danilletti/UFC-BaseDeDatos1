@@ -23,11 +23,8 @@ export class HomeComponent implements OnInit {
     fecha: "15 Nov 2025"
   };
 
-  rankingLigero = [
-    { puesto: 1, nombre: "Islam Makhachev" },
-    { puesto: 2, nombre: "Charles Oliveira" },
-    { puesto: 3, nombre: "Dustin Poirier" }
-  ];
+  rankingLigero: any[] = [];  // 👈 Inicializado vacío
+  ;
 
   ngOnInit(): void {
     console.log('estadisticas', this.estadisticas);

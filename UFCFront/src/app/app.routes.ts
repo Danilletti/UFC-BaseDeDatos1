@@ -12,6 +12,11 @@ export const routes: Routes = [
       import('./pages/peleadores/peleadores.component').then((m) => m.PeleadoresComponent),
   },
   {
+    path: 'peleadores/:id',
+    loadComponent: () =>
+      import('./pages/peleadores/peleador-detalle/peleador-detalle.component').then((m) => m.PeleadorDetalleComponent),
+  },
+  {
     path: 'eventos',
     loadComponent: () =>
       import('./pages/eventos/eventos.component').then((m) => m.EventosComponent),
@@ -21,4 +26,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/rankings/rankings.component').then((m) => m.RankingsComponent),
   },
+  {
+    path: 'estadisticas',
+    loadComponent: () =>
+      import('./pages/estadisticas/estadisticas.component').then((m) => m.EstadisticasComponent),
+  }
 ];

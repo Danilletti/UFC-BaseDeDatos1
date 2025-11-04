@@ -1,0 +1,8 @@
+.estadisticas-root input,
+.estadisticas-root select {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 6px 8px;
+  border-radius: 6px;
+}

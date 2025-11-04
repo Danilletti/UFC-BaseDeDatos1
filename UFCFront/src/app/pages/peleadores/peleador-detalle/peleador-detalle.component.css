@@ -1,0 +1,38 @@
+.detalle-page {
+  padding: 2rem;
+  color: #fff;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.back {
+  background: transparent;
+  color: #fff;
+  border: none;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.detalle-card {
+  background: #1f1f1f;
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  gap: 1rem;
+}
+
+.detalle-card img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.info h2 {
+  margin: 0 0 0.6rem 0;
+}
+
+.info p {
+  margin: 0.25rem 0;
+  color: #ddd;
+}

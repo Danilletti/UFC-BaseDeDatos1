@@ -23,7 +23,7 @@
     </div>
 
     <!-- Lista de cards -->
-    <div class="cards" *ngIf="peleadoresDestacados?.length > 0">
+    <div class="cards" *ngIf="(peleadoresDestacados?.length ?? 0) > 0">
       <div class="card" *ngFor="let p of peleadoresDestacados; trackBy: trackByNombre">
         <h3>{{ p.nombre }}</h3>
         <p>División: {{ p.division }}</p>
@@ -48,7 +48,7 @@
       No hay ranking disponible.
     </div>
 
-    <table *ngIf="rankingLigero?.length > 0">
+    <table *ngIf="(rankingLigero?.length ?? 0) > 0">
       <tr *ngFor="let r of rankingLigero; trackBy: trackByPuesto">
         <td class="puesto">#{{ r.puesto }}</td>
         <td class="nombre">{{ r.nombre }}</td>

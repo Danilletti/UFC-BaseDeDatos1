@@ -1,0 +1,66 @@
+<P>Panel de Estadísticas</P>
+<div class="estadisticas-root" style="padding:1.25rem; color: white; max-width:1200px; margin:0 auto;">
+  <h2 style="color:#ff2b2b; margin-bottom:0.5rem;">📊 Estadísticas — Panel</h2>
+
+  <!-- controles -->
+  <div style="display:flex; gap:0.6rem; align-items:center; margin-bottom:0.8rem;">
+    <label>
+      Dataset:
+      <select [(ngModel)]="selectedDataset" (change)="onDatasetChange()" style="margin-left:0.4rem;">
+        <option *ngFor="let d of datasets" [value]="d.key">{{ d.label }}</option>
+      </select>
+    </label>
+
+    <label>
+      Búsqueda global:
+      <input type="text" [(ngModel)]="searchTerm" (input)="aplicarFiltros()" placeholder="texto libre..."
+        style="margin-left:0.4rem;" />
+    </label>
+
+    <label>
+      Filtrar por campo:
+      <select [(ngModel)]="campoFiltro" (change)="aplicarFiltros()" style="margin-left:0.4rem;">
+        <option value="">(ninguno)</option>
+        <option *ngFor="let c of columnas" [value]="c">{{ c }}</option>
+      </select>
+    </label>
+
+    <label *ngIf="campoFiltro">
+      Valor:
+      <input type="text" [(ngModel)]="valorFiltro" (input)="aplicarFiltros()" style="margin-left:0.4rem;" />
+    </label>
+
+    <button (click)="exportarExcel()"
+      style="margin-left:auto; background:#22c55e; color:#000; padding:0.4rem 0.8rem; border-radius:6px;">Exportar
+      Excel</button>
+  </div>
+
+  <div *ngIf="cargando" style="padding:1rem; background:#111; border-radius:8px;">Cargando datos...</div>
+  <div *ngIf="errorMsg" style="padding:1rem; background:#441111; border-radius:8px;">{{ errorMsg }}</div>
+
+  <div style="margin-top:1rem;">
+    <small>Columnas detectadas: <strong>{{ columnas.length }}</strong></small>
+  </div>
+
+  <div style="margin-top:0.6rem; overflow:auto; background:#141414; border-radius:8px; padding:0.6rem;">
+    <table style="width:100%; border-collapse:collapse; color:#eee;">
+      <thead>
+        <tr style="text-align:left; border-bottom:1px solid #333;">
+          <th *ngFor="let c of columnas" style="padding:0.5rem 0.6rem; min-width:120px;">{{ c }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of previewRows(200)" style="border-bottom:1px solid rgba(255,255,255,0.03);">
+          <td *ngFor="let c of columnas" style="padding:0.4rem 0.6rem; vertical-align:top;">
+            <span>{{ row[c] !== undefined && row[c] !== null ? row[c] : '-' }}</span>
+          </td>
+        </tr>
+        <tr *ngIf="datosFiltrados.length === 0">
+          <td [attr.colspan]="columnas.length" style="padding:0.6rem; text-align:center; color:#999;">
+            No hay filas que coincidan con el filtro.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

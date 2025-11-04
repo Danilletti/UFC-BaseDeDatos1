@@ -1,1 +1,39 @@
-<p>peleadores works!</p>
+<div class="page-container">
+  <div class="header-row">
+    <h1>Peleadores</h1>
+
+    <div class="controls">
+      <input [(ngModel)]="query" (ngModelChange)="applyFilters()" placeholder="Buscar por nombre o apodo" />
+      <select [(ngModel)]="divisionFilter" (change)="applyFilters()">
+        <option value="">Todas las divisiones</option>
+        <option *ngFor="let d of divisions" [value]="d.id">{{ d.nombre }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card" *ngFor="let p of pageItems(); trackBy: trackById">
+      <img [src]="p.imagen" [alt]="p.nombre" />
+      <div class="card-body">
+        <h3>{{ p.nombre }} {{ p.apellido }}</h3>
+        <p class="apodo" *ngIf="p.apodo">"{{ p.apodo }}"</p>
+        <p><strong>División:</strong> {{ getDivisionName(p.id_division) }}</p>
+        <p><strong>Nación:</strong> {{ p.nacionalidad }}</p>
+        <p class="record"><strong>Récord:</strong> {{ p.record_victorias || 0 }}-{{ p.record_derrotas || 0 }}-{{
+          p.record_empates || 0 }}</p>
+        <div class="actions">
+          <button (click)="verDetalle(p)">Ver</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty" *ngIf="filtered.length === 0">No se encontraron peleadores.</div>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="goToPage(page-1)" [disabled]="page===1">«</button>
+    <button *ngFor="let _ of [].constructor(totalPages); let i = index" (click)="goToPage(i+1)"
+      [class.active]="page===i+1">{{ i+1 }}</button>
+    <button (click)="goToPage(page+1)" [disabled]="page===totalPages">»</button>
+  </div>
+</div>
